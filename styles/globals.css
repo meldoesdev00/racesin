@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-screen {
+    @apply max-w-screen-xl mx-auto px-4 md:px-8;
+}
+
+.gradient-border {
+    border: 1px solid transparent;
+    background: linear-gradient(#252525), linear-gradient(25deg, (#252525), (#252525),(#252525), (#252525), (#252525));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+}
+
+body {
+  @apply bg-[#121111] text-white;
+  font-family: "Onest", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee2 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 50s linear infinite;
+}
+
+.animate-marquee2 {
+  animation: marquee2 50s linear infinite;
+}
+
