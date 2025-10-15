@@ -5,7 +5,7 @@ export default function Cookies() {
   return (
     <>
       <Head>
-        <title>Cookie Policy | Racesin Motorsports</title>
+        <title>Cookie Policy | Racesin Motorsport</title>
       </Head>
 
       <div className="min-h-screen bg-[#121111] text-gray-300">
@@ -21,7 +21,7 @@ export default function Cookies() {
             </Link>
             <Link
               href="/"
-              className="text-sm font-medium text-gray-400 hover:text-indigo-400 transition"
+              className="text-sm font-medium text-gray-400 hover:text-[#c5a05f] transition"
             >
               ← Back to Home
             </Link>
@@ -43,7 +43,7 @@ export default function Cookies() {
               <p className="text-gray-400 leading-relaxed">
                 This Cookie Policy explains how RoKe Profiles OÜ (hereinafter
                 the “Company”) uses cookies on its website{" "}
-                <span className="text-indigo-400">racesin.com</span>. We respect
+                <span className="text-[#c5a05f]">racesin.com</span>. We respect
                 your privacy and only use cookies essential for the website and
                 online store to function properly.
               </p>
@@ -168,12 +168,12 @@ export default function Cookies() {
               <p className="text-gray-400 leading-relaxed">
                 The Company may update this Cookie Policy when necessary. The
                 latest version will always be available on{" "}
-                <a
+                <Link
                   href="https://racesin.com/cookies"
-                  className="text-indigo-400 hover:text-indigo-300"
+                  className="text-[#c5a05f] hover:text-[#c5a05f]"
                 >
                   racesin.com/cookies
-                </a>
+                </Link>
                 .
               </p>
             </section>
@@ -186,12 +186,12 @@ export default function Cookies() {
               <p className="text-gray-400 leading-relaxed">
                 RoKe Profiles OÜ <br />
                 E-mail:{" "}
-                <a
+                <Link
                   href="mailto:rokeprofiles@gmail.com"
-                  className="text-indigo-400 hover:text-indigo-300"
+                  className="text-[#c5a05f] hover:text-[#c5a05f]"
                 >
                   rokeprofiles@gmail.com
-                </a>
+                </Link>
               </p>
             </section>
 
@@ -216,10 +216,11 @@ export default function Cookies() {
         {/* Footer */}
         <footer className="border-t border-gray-800 mt-16">
           <div className="max-w-6xl mx-auto px-6 py-10 text-center text-sm text-gray-500">
-            © 2025 Racesin Motorsports. All rights reserved.
+            © 2025 Racesin Motorsport. All rights reserved.
           </div>
         </footer>
       </div>
     </>
   );
 }
+

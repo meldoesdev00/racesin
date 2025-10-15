@@ -19,7 +19,7 @@ const About = () => {
                     </div>
                     <div className="max-w-xl mt-6 md:mt-0 lg:max-w-2xl">
                         <h2 className="text-white text-3xl font-extrabold sm:text-4xl">
-                            What is Racesin Motorsports?
+                            What is Racesin Motorsport?
                         </h2>
                         <p className="mt-3 text-gray-500">
                             Racesin Motorsport is all about passion, dedication, and the love of racing. <br />

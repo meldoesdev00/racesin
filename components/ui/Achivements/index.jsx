@@ -3,37 +3,32 @@ import React from "react";
 const Achievements = () => {
   const events = [
     {
-      date: "Aug 2021",
-      title: "Founded company",
+      date: "2022",
+      title: "3rd place | BMW 325 Cup",
       description:
-        "Nihil aut nam. Dignissimos a pariatur et quos omnis. Aspernatur asperiores et dolorem dolorem",
-    },
-    {
-      date: "Dec 2021",
-      title: "Secured $65m in funding",
-      description:
-        "Nihil aut nam. Dignissimos a pariatur et quos omnis. Aspernatur asperiores et dolorem dolorem",
-    },
-    {
-      date: "2022-2023",
-      title: "Strong season in BMW 325 Cup",
-      description: "Finished 3rd overall in the series",
-    },
-    {
-      date: "2024",
-      title: "Launched Racesin Motorsports",
-      description: "Launched Racesin Motorsports as CEO",
+        "Baltic, Estonian and Lithuanian Championship 3rd place overrall",
     },
     {
       date: "2023",
-      title: "Baltic Touring",
+      title: "3rd place | BMW 325 Cup",
       description:
-        "Part of EST1 Racing multiple podiums and endurance wins with teammate Priit Kadastik",
+        "Baltic, Estonian and Lithuanian Championship 3rd place overrall",
     },
     {
-      date: "2023/2024",
-      title: "Baltic Endurance Champion",
-      description: "Multiple race wins and double-wins at weekend events",
+      date: "2023",
+      title: "Baltic Champion | 2H Nankang Endurance Academy",
+      description: "Baltic Champion in 2H Nankang Endurance Academy BMW 325 Cup class",
+    },
+    {
+      date: "2024",
+      title: "Poland and Baltic Champion | GT3 class",
+      description: "Poland and Baltic Champion in D3500 (GT3) class (2H Endurance)",
+    },
+    {
+      date: "2024",
+      title: "Baltic 3rd | BaTCC GT AM class",
+      description:
+        "Baltic 3rd overall BaTCC GT AM class (TCR and GT4 class) (2H Endurance)",
     },
     {
       date: "2025",
@@ -45,7 +40,7 @@ const Achievements = () => {
       date: "2025",
       title: "Palanga (Aurum 1006 km)",
       description:
-        "Strong showing in GT4 class (class P2 and top-10 overall reported in coverage of the event).",
+        "P2 and top-10 overall reported in coverage of the event.",
     },
   ];
 

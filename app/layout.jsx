@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Racesin Motorsports - attitude, a style, and a vision.",
+  title: "Racesin Motorsport - attitude, a style, and a vision.",
   description:
     "Racesin Motorsport is more than just a name it's an attitude, a style, and a vision.",
   icons: {

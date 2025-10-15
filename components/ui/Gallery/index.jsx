@@ -29,7 +29,7 @@ const Gallery = () => {
         {/* Header */}
         <div className="max-w-4xl mx-auto space-y-3 sm:text-center">
           <h2 className="text-white text-4xl font-extrabold text-center">
-            Done works for clients
+            Works done
           </h2>
         </div>
 

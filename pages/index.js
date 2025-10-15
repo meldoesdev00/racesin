@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Racesin Motorsports</title>
+        <title>Racesin Motorsport</title>
         <meta name="robots" content="index" />
       </Head>
 

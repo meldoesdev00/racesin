@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 import { storefront } from "@/styles/utils";
 import { useCart } from "@/components/CartContext";
+import Footer from "@/components/ui/Footer";
 
 export default function ProductPage({ product, products }) {
   const [loading, setLoading] = useState(false);
@@ -89,7 +90,7 @@ export default function ProductPage({ product, products }) {
   return (
     <>
       <Head>
-        <title>{`${product.title} | Racesin Motorsports`}</title>
+        <title>{`${product.title} | Racesin Motorsport`}</title>
       </Head>
 
       <div className="relative min-h-screen text-white bg-[#121111]">
@@ -302,6 +303,8 @@ export default function ProductPage({ product, products }) {
             </div>
           </div>
         )}
+        <Footer />
+        
       </div>
     </>
   );

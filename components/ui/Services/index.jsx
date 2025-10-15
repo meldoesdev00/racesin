@@ -52,7 +52,7 @@ const Services = () => {
             What services we offer?
           </h2>
           <p className="mt-3 text-gray-500">
-            At RaceSin, we bring together authentic racing experience, advanced
+            At Racesin, we bring together authentic racing experience, advanced
             simulator technology, and precision custom engineering. Our
             expertise allows us to deliver tailored solutions for both the real
             and virtual racing world.

@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 /**
- * 🛒 Racesin Motorsports — Shopify Cart Context
+ * 🛒 Racesin Motorsport — Shopify Cart Context
  * ----------------------------------------------------------
  * - Handles local + Shopify cart sync
  * - Supports multiple items, quantity changes, remove-one logic

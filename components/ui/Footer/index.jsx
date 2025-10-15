@@ -53,7 +53,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <p className="text-center text-sm text-gray-500">
-          ©  2025 Racesin Motorsports. All rights reserved. <br /> Website made by m2.
+          ©  2025 Racesin Motorsport. All rights reserved. <br /> Website made by m2.
         </p>
       </div>
     </footer>
