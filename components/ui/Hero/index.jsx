@@ -23,7 +23,10 @@ const Hero = () => {
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src="/videos/reisin_short.mp4" type="video/mp4" />
+        <source
+          src="https://r6jqpsauiyui9im3.public.blob.vercel-storage.com/reisin_short.mp4"
+          type="video/mp4"
+        />
       </video>
 
       {/* Overlay */}
