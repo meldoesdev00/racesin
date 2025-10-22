@@ -14,37 +14,38 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative h-screen bg-white dark:bg-gray-900">
-      {/* Background video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source
-          src="https://r6jqpsauiyui9im3.public.blob.vercel-storage.com/reisin_short.mp4"
-          type="video/mp4"
-        />
-      </video>
+    <div className="relative h-screen bg-black overflow-hidden">
+      {/* Vimeo background */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 w-[177.78vh] h-[100vh] -translate-x-1/2 -translate-y-1/2 sm:w-[100vw] sm:h-[56.25vw]">
+          <iframe
+            src="https://player.vimeo.com/video/1129637842?background=1&autoplay=1&muted=1&loop=1&playsinline=1"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            className="absolute top-1/2 left-1/2 w-full h-full min-w-[100%] min-h-[100%] transform -translate-x-1/2 -translate-y-1/2 scale-[1.3] sm:scale-[1.1]"
+            style={{
+              objectFit: "cover",
+              pointerEvents: "none",
+            }}
+          ></iframe>
+        </div>
+      </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm -z-0"></div>
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-10"></div>
 
       {/* Navbar */}
-      <header className="absolute inset-x-0 top-0 z-50">
+      <header className="absolute inset-x-0 top-0 z-30">
         <nav
           aria-label="Global"
           className="flex items-center justify-between p-8 lg:px-16"
         >
-          {/* Logo */}
           <div className="flex lg:flex-1">
             <a
               onClick={() => scrollToSection("hero")}
               className="-m-1.5 p-1.5 cursor-pointer"
             >
-              <span className="sr-only">Racesin Motorsport</span>
               <img
                 src="/racesin_logo.svg"
                 alt="Racesin Logo"
@@ -53,14 +54,12 @@ const Hero = () => {
             </a>
           </div>
 
-          {/* Burger icon (mobile only) */}
           <div className="flex lg:hidden">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-100"
             >
-              <span className="sr-only">Open main menu</span>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -78,7 +77,6 @@ const Hero = () => {
             </button>
           </div>
 
-          {/* Desktop menu */}
           <div className="hidden lg:flex lg:gap-x-12 text-gray-100">
             <button onClick={() => scrollToSection("about")} className="text-sm font-semibold">
               About Us
@@ -97,7 +95,6 @@ const Hero = () => {
             </button>
           </div>
 
-          {/* Desktop button */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <button
               onClick={() => scrollToSection("contact")}
@@ -108,10 +105,8 @@ const Hero = () => {
           </div>
         </nav>
 
-        {/* Mobile menu dropdown */}
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/30 backdrop-blur-md">
-            {/* Close button (X) */}
             <button
               onClick={() => setMobileMenuOpen(false)}
               className="absolute top-6 right-6 text-gray-300 hover:text-white"
@@ -132,13 +127,12 @@ const Hero = () => {
               </svg>
             </button>
 
-            {/* Centered nav links */}
             <nav className="flex flex-col items-center space-y-8 text-white text-2xl font-semibold">
               <button onClick={() => scrollToSection("about")}>About Us</button>
               <button onClick={() => scrollToSection("achievements")}>Achievements</button>
               <button onClick={() => scrollToSection("services")}>Our Services</button>
-              <button onClick={() => router.push("/products")}>Racesin Products</button>
-              <button onClick={() => scrollToSection("gallery")}>Gallery</button>
+              <button onClick={() => router.push("/products")}>Products</button>
+              <button onClick={() => scrollToSection("gallery")}>Works</button>
               <button
                 onClick={() => scrollToSection("contact")}
                 className="mt-8 rounded-md bg-[#c5a05f] px-8 py-4 text-lg font-semibold text-white hover:bg-[#b18d54] active:bg-[#9c7a49] focus:ring ring-[#c5a05f] transition-all duration-200"
@@ -150,12 +144,12 @@ const Hero = () => {
         )}
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Text */}
       <div
         id="hero"
-        className="relative flex items-center justify-center h-full px-6 pt-18 lg:px-8 z-20"
+        className="relative flex items-center justify-center h-full px-6 pt-18 lg:px-8 z-20 text-center"
       >
-        <div className="mx-auto max-w-2xl text-center text-gray-100">
+        <div className="mx-auto max-w-2xl text-gray-100">
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             Racesin Motorsport <br /> is more than just a name
           </h1>
@@ -163,7 +157,6 @@ const Hero = () => {
             it&apos;s an attitude, a style, and a vision.
           </p>
 
-          {/* Scroll down indicator */}
           <div
             onClick={() => scrollToSection("about")}
             className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center cursor-pointer"
@@ -193,3 +186,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
