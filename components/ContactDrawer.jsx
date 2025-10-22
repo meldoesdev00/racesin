@@ -2,9 +2,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-import Input from "./ui/input";
-import Button from "./ui/button";
-
+import Input from "./ui/Input";
+import Button from "./ui/Button";
 
 const ContactDrawer = ({ isOpen, onClose, product, price }) => {
   const [formData, setFormData] = useState({
