@@ -7,7 +7,7 @@ export async function POST(req) {
   try {
     const { name, email, phone, message } = await req.json();
 
-    // Validate inputs
+    // ✅ Validate required fields
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -15,9 +15,10 @@ export async function POST(req) {
       );
     }
 
+    // ✅ Send email using your verified domain
     const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: "romet@racesin.com", 
+      from: "info@racesin.com", // 👈 must match your verified domain
+      to: "romet@racesin.com",
       subject: `New message from ${name}`,
       reply_to: email,
       text: `
@@ -38,4 +39,3 @@ Message: ${message}
     );
   }
 }
-
