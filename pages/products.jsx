@@ -19,51 +19,50 @@ export default function ProductsPage({ products }) {
       </Head>
 
       {/* ✅ Navbar */}
-        <header className="absolute inset-x-0 top-0 z-50">
-          <nav
-            aria-label="Global"
-            className="flex items-center justify-between p-8 lg:px-16"
-          >
-            {/* Logo */}
-            <div className="flex lg:flex-1">
-              <a
-                onClick={() => router.push("/")}
-                className="-m-1.5 p-1.5 cursor-pointer"
-              >
-                <img
-                  src="/racesin_logo.svg"
-                  alt="Racesin Logo"
-                  className="h-12 w-auto"
-                />
-              </a>
-            </div>
+      <header className="absolute inset-x-0 top-0 z-50">
+        <nav
+          aria-label="Global"
+          className="flex items-center justify-between p-8 lg:px-16"
+        >
+          {/* Logo */}
+          <div className="flex lg:flex-1">
+            <a
+              onClick={() => router.push("/")}
+              className="-m-1.5 p-1.5 cursor-pointer"
+            >
+              <img
+                src="/racesin_logo.svg"
+                alt="Racesin Logo"
+                className="h-12 w-auto"
+              />
+            </a>
+          </div>
 
-            {/* Right side buttons */}
-            <div className="flex items-center gap-x-8">
-              <button
-                onClick={() => router.push("/")}
-                className="hidden lg:block text-sm font-semibold text-gray-100 hover:text-[#c5a05f] transition"
-              >
-                Back to Home
-              </button>
+          {/* Right side buttons */}
+          <div className="flex items-center gap-x-8">
+            <button
+              onClick={() => router.push("/")}
+              className="hidden lg:block text-sm font-semibold text-gray-100 hover:text-[#c5a05f] transition"
+            >
+              Back to Home
+            </button>
 
-              {/* 🛒 Cart temporarily hidden — keep this for later use */}
-              {/*
-              <button
-                // onClick={openCart} // 📴 temporarily disabled
-                onClick={() =>
-                  alert("🛒 Cart feature is currently disabled. Coming soon!")
-                }
-                className="text-white hover:text-[#c5a05f] transition"
-                aria-label="Cart temporarily disabled"
-              >
-                <ShoppingCart className="h-7 w-7 opacity-80" />
-              </button>
-              */}
-            </div>
-          </nav>
-        </header>
-
+            {/* 🛒 Cart temporarily hidden — keep this for later use */}
+            {/*
+            <button
+              // onClick={openCart} // 📴 temporarily disabled
+              onClick={() =>
+                alert("🛒 Cart feature is currently disabled. Coming soon!")
+              }
+              className="text-white hover:text-[#c5a05f] transition"
+              aria-label="Cart temporarily disabled"
+            >
+              <ShoppingCart className="h-7 w-7 opacity-80" />
+            </button>
+            */}
+          </div>
+        </nav>
+      </header>
 
       {/* 🛍️ Main Content */}
       <main className="flex-grow pt-24 sm:pt-28 px-4 sm:px-6 lg:px-8">
@@ -81,7 +80,15 @@ export default function ProductsPage({ products }) {
         {/* 🏎️ Products Grid */}
         <div className="mx-auto max-w-7xl">
           {products.edges.length > 0 ? (
-            <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            <div
+              className={`grid gap-x-8 gap-y-12 justify-center ${
+                products.edges.length === 1
+                  ? "grid-cols-1 sm:grid-cols-1 lg:w-1/3"
+                  : products.edges.length === 2
+                  ? "grid-cols-1 sm:grid-cols-2 lg:w-2/3"
+                  : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+              } mx-auto`}
+            >
               {products.edges.map((item) => {
                 const product = item.node;
                 const imagep = product.images.edges[0]?.node;
@@ -97,7 +104,7 @@ export default function ProductsPage({ products }) {
                   <div
                     key={product.handle}
                     onClick={() => router.push(`/products/${product.handle}`)}
-                    className="cursor-pointer group block bg-[#1b1b1b] rounded-2xl overflow-hidden shadow-lg hover:shadow-[#c5a05f]/20 transition-transform transform hover:-translate-y-1 duration-300"
+                    className="cursor-pointer group block bg-[#1b1b1b] rounded-2xl overflow-hidden shadow-lg hover:shadow-[#c5a05f]/20 transition-transform transform hover:-translate-y-1 duration-300 w-full max-w-sm"
                   >
                     <div className="aspect-square w-full overflow-hidden">
                       <img

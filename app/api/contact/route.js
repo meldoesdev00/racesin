@@ -15,10 +15,9 @@ export async function POST(req) {
       );
     }
 
-    // ✅ Safe sender (works without domain verification)
     const data = await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: "meldoesdev@gmail.com", // your destination email
+      to: "romet@racesin.com", 
       subject: `New message from ${name}`,
       reply_to: email,
       text: `
