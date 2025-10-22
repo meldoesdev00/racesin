@@ -6,11 +6,15 @@ import { ShoppingCart, ArrowLeft } from "lucide-react";
 import { storefront } from "@/styles/utils";
 import { useCart } from "@/components/CartContext";
 import Footer from "@/components/ui/Footer";
+import ContactDrawer from "@/components/ContactDrawer"; // 🆕 added
 
 export default function ProductPage({ product, products }) {
   const [loading, setLoading] = useState(false);
   const [buyLoading, setBuyLoading] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false); // 🆕 added
   const router = useRouter();
+
+  // 🛒 Cart logic preserved but temporarily inactive
   const { addToCart, openCart } = useCart();
 
   if (!product) {
@@ -33,8 +37,11 @@ export default function ProductPage({ product, products }) {
 
   const variantId = product?.variants?.edges?.[0]?.node?.id || null;
 
-  // 🛒 Add to cart
+  // 🛒 Add to Cart (INACTIVE for now — logic preserved)
   const handleAddToCart = async () => {
+    console.log("Add to Cart is currently disabled.");
+    return;
+    /*
     if (!variantId) return alert("No variant found for this product.");
     setLoading(true);
     try {
@@ -46,13 +53,19 @@ export default function ProductPage({ product, products }) {
     } finally {
       setLoading(false);
     }
+    */
   };
 
-  // 💳 Buy now
+  // 💳 Buy Now → open Contact Drawer (instead of redirect)
   const handleBuyNow = async () => {
-    if (!variantId) return alert("No variant found for this product.");
     setBuyLoading(true);
     try {
+      // 🆕 instead of redirect, open drawer
+      setIsContactOpen(true);
+
+      // ⬇️ Shopify checkout logic preserved (commented for future use)
+      /*
+      if (!variantId) return alert("No variant found for this product.");
       const mutation = `
         mutation CartCreate($variantId: ID!) {
           cartCreate(
@@ -79,9 +92,9 @@ export default function ProductPage({ product, products }) {
       const checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
       if (checkoutUrl) window.location.assign(checkoutUrl);
       else alert("Checkout URL not found.");
+      */
     } catch (error) {
       console.error(error);
-      alert("Error while creating checkout.");
     } finally {
       setBuyLoading(false);
     }
@@ -122,6 +135,8 @@ export default function ProductPage({ product, products }) {
                 <span className="hidden sm:inline">Back to other products</span>
               </button>
 
+              {/* 🛒 Cart Button (INACTIVE for now — preserved) */}
+              {/*
               <button
                 onClick={openCart}
                 className="hover:text-[#c5a05f] transition"
@@ -129,6 +144,7 @@ export default function ProductPage({ product, products }) {
               >
                 <ShoppingCart className="w-6 h-6 text-white" />
               </button>
+              */}
             </div>
           </nav>
         </header>
@@ -184,6 +200,8 @@ export default function ProductPage({ product, products }) {
               {/* 🛒 Add & Buy buttons */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 mb-10">
                 <div className="flex w-full sm:w-auto gap-3">
+                  {/* 🛒 Add to Cart (INACTIVE for now — preserved) */}
+                  {/*
                   <button
                     onClick={handleAddToCart}
                     disabled={loading}
@@ -195,16 +213,19 @@ export default function ProductPage({ product, products }) {
                   >
                     {loading ? "Adding..." : "Add to Cart"}
                   </button>
+                  */}
 
+                  {/* 💳 Buy Now → Contact Drawer (with product info) */}
                   <button
                     onClick={handleBuyNow}
                     disabled={buyLoading}
-                    className={`flex-1 sm:flex-none border border-[#c5a05f] text-[#c5a05f] hover:bg-[#c5a05f] hover:text-white font-medium px-6 py-3 rounded-xl transition ${
+                    className={`flex-1 sm:flex-none bg-[#c5a05f] text-white hover:bg-[#b28d54] font-medium px-6 py-3 rounded-xl transition ${
                       buyLoading && "opacity-60 cursor-not-allowed"
                     }`}
                   >
-                    {buyLoading ? "Redirecting..." : "Buy Now"}
+                    {buyLoading ? "Opening..." : "Buy Now"}
                   </button>
+
                 </div>
               </div>
 
@@ -219,8 +240,11 @@ export default function ProductPage({ product, products }) {
                       What’s included with this simulator rig?
                     </p>
                     <p className="text-gray-400 mt-1">
-                      Each simulator rig comes with the main frame and mounting points for your wheel, pedals, and seat. <br />
-                      Some models include accessories like monitor stands or motion platforms — check the product description for full details.
+                      Each simulator rig comes with the main frame and mounting
+                      points for your wheel, pedals, and seat. <br />
+                      Some models include accessories like monitor stands or
+                      motion platforms — check the product description for full
+                      details.
                     </p>
                   </div>
                   <div>
@@ -228,8 +252,10 @@ export default function ProductPage({ product, products }) {
                       Is this simulator compatible with my setup?
                     </p>
                     <p className="text-gray-400 mt-1">
-                      Most rigs are compatible with major brands like Logitech, Thrustmaster, and Fanatec. <br />
-                      Please review the compatibility section or contact our support team if you’re unsure about your hardware fit.
+                      Most rigs are compatible with major brands like Logitech,
+                      Thrustmaster, and Fanatec. <br />
+                      Please review the compatibility section or contact our
+                      support team if you’re unsure about your hardware fit.
                     </p>
                   </div>
                   <div>
@@ -237,8 +263,10 @@ export default function ProductPage({ product, products }) {
                       How much space do I need for this simulator rig?
                     </p>
                     <p className="text-gray-400 mt-1">
-                      Most simulator rigs require a space of about 4–6 feet in length and 3–4 feet in width for comfortable use. <br />
-                      If you plan to add motion systems or triple monitors, allow extra room for movement and accessibility.
+                      Most simulator rigs require a space of about 4–6 feet in
+                      length and 3–4 feet in width for comfortable use. <br />
+                      If you plan to add motion systems or triple monitors,
+                      allow extra room for movement and accessibility.
                     </p>
                   </div>
                 </div>
@@ -247,7 +275,7 @@ export default function ProductPage({ product, products }) {
           </div>
         </div>
 
-        {/* 🧩 Recommended */}
+        {/* 🧩 Recommended Products */}
         {products?.length > 0 && (
           <div className="border-t border-gray-700 pt-16 pb-24 px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-7xl">
@@ -303,8 +331,16 @@ export default function ProductPage({ product, products }) {
             </div>
           </div>
         )}
+
+        {/* 🆕 Contact Drawer */}
+        <ContactDrawer
+          isOpen={isContactOpen}
+          onClose={() => setIsContactOpen(false)}
+          product={product.title}
+          price={formattedPrice}
+        />
+
         <Footer />
-        
       </div>
     </>
   );
@@ -358,5 +394,4 @@ query ProductAndList($handle: String!) {
   }
 }
 `;
-
 

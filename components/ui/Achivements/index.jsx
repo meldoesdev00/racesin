@@ -42,6 +42,12 @@ const Achievements = () => {
       description:
         "P2 and top-10 overall reported in coverage of the event.",
     },
+    {
+      date: "2026",
+      title: "Coming soon",
+      description:
+        "",
+    },
   ];
 
   return (

@@ -5,29 +5,7 @@ const Footer = () => {
     <footer className="bg-[#121111] text-gray-400">
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Top Links */}
-        <div className="flex flex-col items-center space-y-6 sm:space-y-0 sm:flex-row sm:justify-center sm:space-x-10 mb-8">
-          <Link
-            href="/terms"
-            className="hover:text-white transition-colors"
-          >
-            Terms & Conditions
-          </Link>
 
-          <Link
-            href="/privacy"
-            className="hover:text-white transition-colors"
-          >
-            Privacy Policy
-          </Link>
-
-          <Link
-            href="/cookies"
-            className="hover:text-white transition-colors"
-          >
-            Cookies Policy
-          </Link>
-
-        </div>
 
         {/* Social Icons */}
         <div className="flex justify-center space-x-6 mb-6">

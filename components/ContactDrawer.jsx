@@ -1,18 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { Phone, Mail } from "lucide-react";
-import Input from "../Input";
-import Button from "../Button";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import Input from "./ui/input";
+import Button from "./ui/button";
 
-const Contact = () => {
-  const searchParams = useSearchParams();
 
-  // 🧠 If redirected from "Buy Now", extract product info
-  const product = searchParams.get("product");
-  const price = searchParams.get("price");
-
+const ContactDrawer = ({ isOpen, onClose, product, price }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,7 +15,6 @@ const Contact = () => {
   });
   const [status, setStatus] = useState("");
 
-  // 💬 Prefill message if product info exists
   useEffect(() => {
     if (product) {
       setFormData((prev) => ({
@@ -54,44 +47,45 @@ const Contact = () => {
         setStatus(`❌ Failed to send: ${data.error || "Try again later."}`);
       }
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error(error);
       setStatus("❌ Something went wrong. Please try again later.");
     }
   };
 
   return (
-    <motion.div
-      id="contact"
-      className="pt-16 pb-20 bg-transparent"
-      initial={{ opacity: 0, filter: "blur(8px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      {/* Centered container */}
-      <div className="max-w-screen-2xl mx-auto px-6 lg:px-8">
-        <div className="mx-auto flex flex-col lg:flex-row items-start justify-center gap-12 lg:gap-60">
-          {/* LEFT SIDE — Get in touch */}
-          <div className="max-w-md">
-            <h2 className="text-white text-4xl font-extrabold">Get in touch</h2>
-            <p className="mt-4 text-gray-400 leading-relaxed">
-              We are here to help. Get in touch with sales or our press team and let us know how we can help.
-            </p>
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Overlay */}
+          <motion.div
+            className="fixed inset-0 bg-black/60 z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
 
-            <ul className="mt-8 space-y-6">
-              <li className="flex items-start gap-4">
-                <Phone className="w-6 h-6 text-[#c5a05f]" />
-                <p className="text-gray-300">+372 565 8880</p>
-              </li>
+          {/* Drawer */}
+          <motion.div
+            className="fixed z-50 bg-[#1c1b1b] text-white p-6 sm:p-8 rounded-t-2xl sm:rounded-none sm:rounded-l-2xl shadow-2xl w-full sm:w-[480px] max-h-[100vh] overflow-y-auto right-0 bottom-0 sm:top-0"
+            initial={{ x: "100%", y: "0%" }}
+            animate={{
+              x: 0,
+              y: 0,
+              transition: { type: "spring", damping: 25, stiffness: 300 },
+            }}
+            exit={{
+              x: "100%",
+              transition: { duration: 0.3 },
+            }}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold text-[#c5a05f]">Get in touch</h2>
+              <button onClick={onClose}>
+                <X className="w-6 h-6 text-gray-300 hover:text-white" />
+              </button>
+            </div>
 
-              <li className="flex items-start gap-4">
-                <Mail className="w-6 h-6 text-[#c5a05f]" />
-                <p className="text-gray-300">info@racesin.com</p>
-              </li>
-            </ul>
-          </div>
-
-          {/* RIGHT SIDE — Contact Form */}
-          <div className="flex-1 w-full max-w-md">
             <form onSubmit={handleSubmit} className="space-y-5 font-medium">
               <div>
                 <label className="text-white">Your name</label>
@@ -101,9 +95,10 @@ const Contact = () => {
                   onChange={handleChange}
                   type="text"
                   required
-                  className="mt-2 focus:border-[#c5a05f]"
+                  className="mt-2"
                 />
               </div>
+
               <div>
                 <label className="text-white">Email</label>
                 <Input
@@ -112,9 +107,10 @@ const Contact = () => {
                   onChange={handleChange}
                   type="email"
                   required
-                  className="mt-2 focus:border-[#c5a05f]"
+                  className="mt-2"
                 />
               </div>
+
               <div>
                 <label className="text-white">Phone</label>
                 <Input
@@ -122,9 +118,10 @@ const Contact = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   type="text"
-                  className="mt-2 focus:border-[#c5a05f]"
+                  className="mt-2"
                 />
               </div>
+
               <div>
                 <label className="text-white">How we can help you?</label>
                 <textarea
@@ -136,11 +133,12 @@ const Contact = () => {
                 ></textarea>
               </div>
 
-              <div className="pt-1">
-                <Button className="w-full bg-[#c5a05f] text-white hover:bg-[#b89255] active:bg-[#a5804c] ring-offset-2 ring-[#c5a05f] focus:ring">
-                  Submit
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                className="w-full bg-[#c5a05f] hover:bg-[#b89255] text-white active:bg-[#a5804c]"
+              >
+                Submit
+              </Button>
 
               {status && (
                 <p
@@ -156,11 +154,12 @@ const Contact = () => {
                 </p>
               )}
             </form>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 
-export default Contact;
+export default ContactDrawer;
+

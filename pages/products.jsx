@@ -2,11 +2,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { storefront } from "@/styles/utils";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "@/components/CartContext";
+// 🛒 Temporarily disabled cart context
+// import { useCart } from "@/components/CartContext";
 
 export default function ProductsPage({ products }) {
   const router = useRouter();
-  const { openCart } = useCart();
+
+  // 🛒 Disabled temporarily — uncomment when reactivating cart
+  // const { openCart } = useCart();
 
   return (
     <div className="relative bg-[#121111] min-h-screen flex flex-col">
@@ -16,45 +19,51 @@ export default function ProductsPage({ products }) {
       </Head>
 
       {/* ✅ Navbar */}
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav
-          aria-label="Global"
-          className="flex items-center justify-between p-8 lg:px-16"
-        >
-          {/* Logo */}
-          <div className="flex lg:flex-1">
-            <a
-              onClick={() => router.push("/")}
-              className="-m-1.5 p-1.5 cursor-pointer"
-            >
-              <img
-                src="/racesin_logo.svg"
-                alt="Racesin Logo"
-                className="h-12 w-auto"
-              />
-            </a>
-          </div>
+        <header className="absolute inset-x-0 top-0 z-50">
+          <nav
+            aria-label="Global"
+            className="flex items-center justify-between p-8 lg:px-16"
+          >
+            {/* Logo */}
+            <div className="flex lg:flex-1">
+              <a
+                onClick={() => router.push("/")}
+                className="-m-1.5 p-1.5 cursor-pointer"
+              >
+                <img
+                  src="/racesin_logo.svg"
+                  alt="Racesin Logo"
+                  className="h-12 w-auto"
+                />
+              </a>
+            </div>
 
-          {/* Right side buttons */}
-          <div className="flex items-center gap-x-8">
-            <button
-              onClick={() => router.push("/")}
-              className="hidden lg:block text-sm font-semibold text-gray-100 hover:text-[#c5a05f] transition"
-            >
-              Back to Home
-            </button>
+            {/* Right side buttons */}
+            <div className="flex items-center gap-x-8">
+              <button
+                onClick={() => router.push("/")}
+                className="hidden lg:block text-sm font-semibold text-gray-100 hover:text-[#c5a05f] transition"
+              >
+                Back to Home
+              </button>
 
-            {/* 🛒 Global Cart Icon */}
-            <button
-              onClick={openCart}
-              className="text-white hover:text-[#c5a05f] transition"
-              aria-label="Open cart"
-            >
-              <ShoppingCart className="h-7 w-7" />
-            </button>
-          </div>
-        </nav>
-      </header>
+              {/* 🛒 Cart temporarily hidden — keep this for later use */}
+              {/*
+              <button
+                // onClick={openCart} // 📴 temporarily disabled
+                onClick={() =>
+                  alert("🛒 Cart feature is currently disabled. Coming soon!")
+                }
+                className="text-white hover:text-[#c5a05f] transition"
+                aria-label="Cart temporarily disabled"
+              >
+                <ShoppingCart className="h-7 w-7 opacity-80" />
+              </button>
+              */}
+            </div>
+          </nav>
+        </header>
+
 
       {/* 🛍️ Main Content */}
       <main className="flex-grow pt-24 sm:pt-28 px-4 sm:px-6 lg:px-8">
@@ -64,7 +73,7 @@ export default function ProductsPage({ products }) {
             Discover Our Products
           </h2>
           <p className="mt-3 text-gray-400 text-lg leading-relaxed">
-            At RaceSin, we craft high-quality sim racing and engineering
+            At Racesin, we craft high-quality sim racing and engineering
             products, blending precision, performance, and passion.
           </p>
         </div>
@@ -118,7 +127,7 @@ export default function ProductsPage({ products }) {
         </div>
       </main>
 
-      {/* ✅ Footer Section (Icons + Copyright Only) */}
+      {/* ✅ Footer Section */}
       <footer className="bg-[#121111] text-gray-400">
         <div className="max-w-7xl mx-auto px-6 py-12">
           {/* Social Icons */}
@@ -143,9 +152,9 @@ export default function ProductsPage({ products }) {
             </a>
           </div>
 
-          {/* Copyright */}
           <p className="text-center text-sm text-gray-500">
-            © {new Date().getFullYear()} Racesin Motorsport. All rights reserved. <br /> Website made by m2.
+            © {new Date().getFullYear()} Racesin Motorsport. All rights
+            reserved. <br /> Website made by m2.
           </p>
         </div>
       </footer>
@@ -189,6 +198,3 @@ query Products {
   }
 }
 `;
-
-
-

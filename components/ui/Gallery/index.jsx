@@ -1,25 +1,24 @@
 import SectionWrapper from "../../SectionWrapper";
-import service1 from "/public/pictures/pic3.jpeg";
-import service2 from "/public/pictures/pic3.jpeg";
-import service3 from "/public/pictures/pic3.jpeg";
-import service4 from "/public/pictures/pic4.jpeg";
+import service1 from "/public/pictures/ig4.jpg";
+import service2 from "/public/pictures/ig5.jpg";
+import service3 from "/public/pictures/ig7.jpg";
 
 const Gallery = () => {
   const features = [
     {
       image: service1,
-      title: "Simulator Reints-v1",
-      desc: "We provide rental and full maintenance services for real race cars — making motorsport more accessible.",
+      title: "",
+      desc: "",
     },
     {
       image: service2,
-      title: "Simulator Reints-v2",
-      desc: "High-quality racing simulator frames built from aluminum profiles. Available as ready-made products or custom-built solutions tailored to your needs.",
+      title: "",
+      desc: "",
     },
     {
       image: service3,
-      title: "Simulator Reints-v3",
-      desc: "Versatile aluminum profile constructions for workbenches, shelving, 3D printer frames, work environments, and more.",
+      title: "",
+      desc: "",
     },
   ];
 

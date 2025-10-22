@@ -5,7 +5,6 @@ import Achivements from "../components/ui/Achivements";
 import Divider from "../components/ui/Divider";
 import Gallery from "../components/ui/Gallery";
 import Hero from "../components/ui/Hero";
-import Testimonials from "../components/ui/Testimonials";
 import Services from "../components/ui/Services";
 import Contact from "../components/ui/Contact";
 import Footer from "../components/ui/Footer";
@@ -25,8 +24,6 @@ export default function Home() {
       <Achivements />
       <Divider />
       <Services />
-      <Divider />
-      <Testimonials />
       <Divider />
       <Gallery />
       <Divider />
