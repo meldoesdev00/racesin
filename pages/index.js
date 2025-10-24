@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Racesin Motorsport</title>
+        <title>Racesin Motorsport | is more than just a name - it's an attitude, a style, and a vision.</title>
         <meta name="robots" content="index" />
       </Head>
 

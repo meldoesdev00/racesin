@@ -16,7 +16,7 @@ importers:
         version: 2.2.0(react@18.2.0)
       '@medusajs/medusa-js':
         specifier: ^6.1.10
-        version: 6.1.10(@medusajs/medusa@1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.11.3)(reflect-metadata@0.1.14)))
+        version: 6.1.10(@medusajs/medusa@1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.16.3)(reflect-metadata@0.1.14)))
       '@next/font':
         specifier: 13.0.7
         version: 13.0.7
@@ -29,6 +29,9 @@ importers:
       '@swc/helpers':
         specifier: ^0.5.17
         version: 0.5.17
+      '@vercel/speed-insights':
+        specifier: ^1.2.0
+        version: 1.2.0(next@13.4.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       airtable:
         specifier: ^0.12.2
         version: 0.12.2
@@ -1908,6 +1911,29 @@ packages:
     resolution: {integrity: sha512-lrW200hZdbfRtztbygyaq/6jP6AKE8qQN2KvPcJ+x7wiD038YtnYtZ82IMNJ69GJibV7bwL3y9FgK+5w/pYt6g==}
     cpu: [x64]
     os: [win32]
+
+  '@vercel/speed-insights@1.2.0':
+    resolution: {integrity: sha512-y9GVzrUJ2xmgtQlzFP2KhVRoCglwfRQgjyfY607aU0hh0Un6d0OUyrJkjuAlsV18qR4zfoFPs/BiIj9YDS6Wzw==}
+    peerDependencies:
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@whatwg-node/promise-helpers@1.3.2':
     resolution: {integrity: sha512-Nst5JdK47VIl9UcGwtv2Rcgyn5lWtZ0/mhRQ4G8NN2isxpq2TO30iqHzmwoJycjWuyUfg3GFXqP/gFHXeV57IA==}
@@ -5380,9 +5406,9 @@ snapshots:
       - supports-color
       - tedious
 
-  '@medusajs/medusa-js@6.1.10(@medusajs/medusa@1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.11.3)(reflect-metadata@0.1.14)))':
+  '@medusajs/medusa-js@6.1.10(@medusajs/medusa@1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.16.3)(reflect-metadata@0.1.14)))':
     dependencies:
-      '@medusajs/medusa': 1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.11.3)(reflect-metadata@0.1.14))
+      '@medusajs/medusa': 1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.16.3)(reflect-metadata@0.1.14))
       axios: 0.24.0
       cross-env: 5.2.1
       qs: 6.14.0
@@ -5391,7 +5417,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@medusajs/medusa@1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.11.3)(reflect-metadata@0.1.14))':
+  '@medusajs/medusa@1.20.11(@mikro-orm/migrations@5.9.7)(@types/ioredis-mock@8.2.6(ioredis@5.8.1))(@types/node@14.18.63)(medusa-interfaces@1.3.10)(typeorm@0.3.27(ioredis@5.8.1)(pg@8.16.3)(reflect-metadata@0.1.14))':
     dependencies:
       '@medusajs/core-flows': 0.0.10(@types/node@14.18.63)(pg@8.16.3)
       '@medusajs/link-modules': 0.2.12(@mikro-orm/migrations@5.9.7)(@types/node@14.18.63)(pg@8.16.3)
@@ -5441,7 +5467,7 @@ snapshots:
       regenerator-runtime: 0.13.11
       request-ip: 3.3.0
       scrypt-kdf: 2.0.1
-      typeorm: 0.3.27(ioredis@5.8.1)(pg@8.11.3)(reflect-metadata@0.1.14)
+      typeorm: 0.3.27(ioredis@5.8.1)(pg@8.16.3)(reflect-metadata@0.1.14)
       ulid: 2.4.0
       uuid: 9.0.1
       winston: 3.18.3
@@ -5594,7 +5620,7 @@ snapshots:
       mikro-orm: 5.9.7
       reflect-metadata: 0.1.13
     optionalDependencies:
-      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.11.3)
+      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.16.3)
       '@mikro-orm/postgresql': 5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)
 
   '@mikro-orm/knex@5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(pg@8.11.3)':
@@ -5604,7 +5630,7 @@ snapshots:
       knex: 2.5.1(pg@8.11.3)
       sqlstring: 2.3.3
     optionalDependencies:
-      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.11.3)
+      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.16.3)
       pg: 8.11.3
     transitivePeerDependencies:
       - pg-native
@@ -5618,33 +5644,12 @@ snapshots:
       knex: 2.5.1(pg@8.16.3)
       sqlstring: 2.3.3
     optionalDependencies:
-      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.11.3)
+      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.16.3)
       pg: 8.16.3
     transitivePeerDependencies:
       - pg-native
       - supports-color
       - tedious
-
-  '@mikro-orm/migrations@5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.11.3)':
-    dependencies:
-      '@mikro-orm/core': 5.9.7(@mikro-orm/migrations@5.9.7)(@mikro-orm/postgresql@5.9.7)
-      '@mikro-orm/knex': 5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(pg@8.11.3)
-      fs-extra: 11.1.1
-      knex: 2.5.1(pg@8.11.3)
-      umzug: 3.3.1(@types/node@14.18.63)
-    transitivePeerDependencies:
-      - '@mikro-orm/entity-generator'
-      - '@types/node'
-      - better-sqlite3
-      - mssql
-      - mysql
-      - mysql2
-      - pg
-      - pg-native
-      - sqlite3
-      - supports-color
-      - tedious
-    optional: true
 
   '@mikro-orm/migrations@5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.16.3)':
     dependencies:
@@ -5672,7 +5677,7 @@ snapshots:
       '@mikro-orm/knex': 5.9.7(@mikro-orm/core@5.9.7)(@mikro-orm/migrations@5.9.7)(pg@8.11.3)
       pg: 8.11.3
     optionalDependencies:
-      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.11.3)
+      '@mikro-orm/migrations': 5.9.7(@mikro-orm/core@5.9.7)(@types/node@14.18.63)(pg@8.16.3)
     transitivePeerDependencies:
       - better-sqlite3
       - mssql
@@ -8121,6 +8126,11 @@ snapshots:
 
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
+
+  '@vercel/speed-insights@1.2.0(next@13.4.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)':
+    optionalDependencies:
+      next: 13.4.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
 
   '@whatwg-node/promise-helpers@1.3.2':
     dependencies:
@@ -11286,7 +11296,7 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typeorm@0.3.27(ioredis@5.8.1)(pg@8.11.3)(reflect-metadata@0.1.14):
+  typeorm@0.3.27(ioredis@5.8.1)(pg@8.16.3)(reflect-metadata@0.1.14):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 3.17.0
@@ -11305,7 +11315,7 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       ioredis: 5.8.1
-      pg: 8.11.3
+      pg: 8.16.3
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color

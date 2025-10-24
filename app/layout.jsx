@@ -1,3 +1,6 @@
+import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 export const metadata = {
   title: "Racesin Motorsport - attitude, a style, and a vision.",
   description:
@@ -6,3 +9,14 @@ export const metadata = {
     icon: "/favicon.ico",
   },
 };
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <SpeedInsights />
+      </body>
+    </html>
+  );
+}
