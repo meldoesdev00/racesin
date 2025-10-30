@@ -90,17 +90,19 @@ const Contact = () => {
               </li>
             </ul>
 
-              {/*  OUR PARTNERS SECTION*/}
-              <div className="mt-12">
-                <h3 className="text-white text-2xl font-extrabold mb-4">Our Partners</h3>
-                <div className="flex items-center overflow-visible">
-                  <img
-                    src="/logos/logos.svg"
-                    alt="Our partners"
-                    className="w-[200%] max-w-none h-auto"
-                  />
-                </div>
+
+            {/*  OUR PARTNERS SECTION*/}
+            <div className="mt-12">
+              <h3 className="text-white text-2xl font-extrabold mb-4">Our Partners</h3>
+              <div className="flex items-center overflow-visible">
+                <img
+                  src="/logos/logos.svg"
+                  alt="Our partners"
+                  className="w-[120%] sm:w-[150%] lg:w-[200%] max-w-none h-auto"
+                />
               </div>
+            </div>
+
           </div>
 
           {/* RIGHT SIDE — Contact Form */}
