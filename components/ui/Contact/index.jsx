@@ -90,19 +90,17 @@ const Contact = () => {
               </li>
             </ul>
 
-
-            {/*  OUR PARTNERS SECTION*/}
+            {/*  OUR PARTNERS SECTION (FIXED RESPONSIVE SIZING) */}
             <div className="mt-12">
               <h3 className="text-white text-2xl font-extrabold mb-4">Our Partners</h3>
-              <div className="flex items-center overflow-visible">
+              <div className="flex items-center justify-center overflow-hidden">
                 <img
                   src="/logos/logos.svg"
                   alt="Our partners"
-                  className="w-[120%] sm:w-[100%] lg:w-[200%] max-w-none h-auto"
+                  className="w-full sm:w-[130%] lg:w-[200%] max-w-none h-auto"
                 />
               </div>
             </div>
-
           </div>
 
           {/* RIGHT SIDE — Contact Form */}
