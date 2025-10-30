@@ -70,6 +70,7 @@ const Contact = () => {
       {/* Centered container */}
       <div className="max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="mx-auto flex flex-col lg:flex-row items-start justify-center gap-12 lg:gap-60">
+          
           {/* LEFT SIDE — Get in touch */}
           <div className="max-w-md">
             <h2 className="text-white text-4xl font-extrabold">Get in touch</h2>
@@ -88,6 +89,18 @@ const Contact = () => {
                 <p className="text-gray-300">romet@racesin.com</p>
               </li>
             </ul>
+
+              {/*  OUR PARTNERS SECTION*/}
+              <div className="mt-12">
+                <h3 className="text-white text-2xl font-extrabold mb-4">Our Partners</h3>
+                <div className="flex items-center overflow-visible">
+                  <img
+                    src="/logos/logos.svg"
+                    alt="Our partners"
+                    className="w-[200%] max-w-none h-auto"
+                  />
+                </div>
+              </div>
           </div>
 
           {/* RIGHT SIDE — Contact Form */}

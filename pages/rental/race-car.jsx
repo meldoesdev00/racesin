@@ -16,7 +16,7 @@ export default function SwiftRentalPage() {
   const [hovering, setHovering] = useState(false);
 
   const images = [Car1, Car2];
-  const productName = "Suzuki Swift V1600 – Race Car";
+  const productName = "Suzuki Swift V1600";
 
   useEffect(() => {
     const interval = setInterval(() => {

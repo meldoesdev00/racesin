@@ -23,12 +23,13 @@ const About = () => {
                         </h2>
                         <p className="mt-3 text-gray-500">
                             Racesin Motorsport is all about passion, dedication, and the love of racing. <br />
-                            Founded by Romet Reisin, the team was created to turn the dream of professional motorsport into reality. <br /> <br />
-                            Our goal isn’t just to win on the track – it’s also to build a community of people who share the same love for speed, engineering, and competition.
-
-                            What started as a personal project has grown into much more than just a racing team. <br /> <br />
+                            Our goal isn’t just to win on the track – it’s also to build a community of people <br />
+                            who share the same love for speed, engineering, and competition.
+                            <br />
+                            <br />
                             Racesin Motorsport is now a place for learning, teamwork, and pushing limits together.
-                            Whether it’s circuit racing, sim racing, or new technical ideas, we always focus on quality, collaboration, and our strong passion for motorsport.
+                            Whether it’s circuit racing, sim racing, or new technical ideas, we always focus <br />
+                            on quality, collaboration, and our strong passion for motorsport.
                         </p>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import SectionWrapper from "../../SectionWrapper";
 import service1 from "/public/pictures/coaching2.jpg";
 import service2 from "/public/pictures/simulator.jpg";
-import service6 from "/public/pictures/pic2.jpg";
+import service6 from "/public/pictures/Car2.jpg";
 import carImage from "/public/pictures/rendikas_car.png";
 import kartImage from "/public/pictures/rendikas_kart.png";
 
@@ -32,14 +32,14 @@ const Services = () => {
     {
       image: service2,
       title: "Racesin Simulators",
-      desc: "High-quality racing simulator frames built from aluminum profiles. Available as ready-made products or custom-built solutions tailored to your needs.",
+      desc: "High-quality racing simulator frames built from aluminum profiles. Available as ready-made products or custom-built solutions to your needs.",
       action: "products",
       pulse: true,
     },
     {
       image: service6,
-      title: "Track-day service",
-      desc: "Consultation, setup, and full service for sim racing rigs, racing gear, and profile-based systems.",
+      title: "Race Vehicles for Rent",
+      desc: "Professionally prepared kart and race car, maintained to high standards — available for testing and race events.",
       action: "overlay",
       pulse: true,
     },
@@ -73,10 +73,8 @@ const Services = () => {
               What services we offer?
             </h2>
             <p className="mt-3 text-gray-500">
-              At Racesin, we bring together authentic racing experience,
-              advanced simulator technology, and precision custom engineering.
-              Our expertise allows us to deliver tailored solutions for both the
-              real and virtual racing world.
+            At Racesin, we blend racing experience, advanced sim tech,
+            and precision engineering — <br />driving performance forward in both real and virtual racing.
             </p>
           </div>
 
@@ -161,7 +159,7 @@ const Services = () => {
                 />
               </div>
               <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
-                Race Car
+                Suzuki Swift V1600
               </p>
             </div>
 
@@ -181,7 +179,7 @@ const Services = () => {
                 />
               </div>
               <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
-                Kart
+                Rotax DD2 – Tony Kart
               </p>
             </div>
           </div>
