@@ -98,7 +98,7 @@ const Contact = () => {
                 <img
                   src="/logos/logos.svg"
                   alt="Our partners"
-                  className="w-[120%] sm:w-[130%] lg:w-[200%] max-w-none h-auto"
+                  className="w-[120%] sm:w-[100%] lg:w-[200%] max-w-none h-auto"
                 />
               </div>
             </div>
