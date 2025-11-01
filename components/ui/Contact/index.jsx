@@ -88,6 +88,10 @@ const Contact = () => {
                 <Mail className="w-6 h-6 text-[#c5a05f]" />
                 <p className="text-gray-300">romet@racesin.com</p>
               </li>
+                <li className="flex items-start gap-4">
+                <Mail className="w-6 h-6 text-[#c5a05f]" />
+                <p className="text-gray-300">kevin@racesin.com</p>
+              </li>
             </ul>
 
             {/*  OUR PARTNERS SECTION (FIXED RESPONSIVE SIZING) */}
