@@ -13,47 +13,29 @@ const Hero = () => {
     }
   };
 
-  const isMobile =
-    typeof window !== "undefined" &&
-    /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
-
   return (
     <div className="relative h-screen bg-black overflow-hidden">
-
-      {/* ✅ Background Video */}
+      {/* Vimeo background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-
-        {/* MOBILE → HTML5 VIDEO (no black bars, autoplay works on iOS/Android) */}
-        {isMobile ? (
-          <video
-            src="YOUR_MP4_VIDEO_URL_HERE"
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute w-full h-full object-cover"
-          />
-        ) : (
-          // DESKTOP → Vimeo background
+        <div className="absolute top-1/2 left-1/2 w-[177.78vh] h-[100vh] -translate-x-1/2 -translate-y-1/2 sm:w-[100vw] sm:h-[56.25vw]">
           <iframe
-            src="https://player.vimeo.com/video/1129637842?background=1&autoplay=1&muted=1&loop=1&playsinline=1&autopause=0"
+            src="https://player.vimeo.com/video/1129637842?background=1&autoplay=1&muted=1&loop=1&playsinline=1"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
-            className="absolute top-1/2 left-1/2 w-[177.78vh] h-[100vh] -translate-x-1/2 -translate-y-1/2 sm:w-[100vw] sm:h-[56.25vw]"
+            className="absolute top-1/2 left-1/2 w-full h-full min-w-[100%] min-h-[100%] transform -translate-x-1/2 -translate-y-1/2 scale-[1.3] sm:scale-[1.1]"
             style={{
               objectFit: "cover",
               pointerEvents: "none",
             }}
           ></iframe>
-        )}
+        </div>
       </div>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-10"></div>
 
-      {/* --- NAVBAR + CONTENT (your original code unchanged below) --- */}
-
+      {/* Navbar */}
       <header className="absolute inset-x-0 top-0 z-30">
         <nav
           aria-label="Global"
@@ -122,12 +104,50 @@ const Hero = () => {
             </button>
           </div>
         </nav>
+
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/30 backdrop-blur-md">
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-6 right-6 text-gray-300 hover:text-white"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-8 h-8"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <nav className="flex flex-col items-center space-y-8 text-white text-2xl font-semibold">
+              <button onClick={() => scrollToSection("about")}>About Us</button>
+              <button onClick={() => scrollToSection("achievements")}>Achievements</button>
+              <button onClick={() => scrollToSection("services")}>Our Services</button>
+              <button onClick={() => router.push("/products")}>Products</button>
+              <button onClick={() => scrollToSection("gallery")}>Works</button>
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="mt-8 rounded-md bg-[#c5a05f] px-8 py-4 text-lg font-semibold text-white hover:bg-[#b18d54] active:bg-[#9c7a49] focus:ring ring-[#c5a05f] transition-all duration-200"
+              >
+                Let&apos;s talk
+              </button>
+            </nav>
+          </div>
+        )}
       </header>
 
-      {/* Hero Content (unchanged) */}
+      {/* Hero Text */}
       <div
         id="hero"
-        className="relative flex items-center justify-center h-full px-6 lg:px-8 z-20 text-center"
+        className="relative flex items-center justify-center h-full px-6 pt-18 lg:px-8 z-20 text-center"
       >
         <div className="mx-auto max-w-2xl text-gray-100">
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
@@ -166,3 +186,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
