@@ -19,7 +19,7 @@ const Hero = () => {
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <div className="absolute top-1/2 left-1/2 w-[177.78vh] h-[100vh] -translate-x-1/2 -translate-y-1/2 sm:w-[100vw] sm:h-[56.25vw]">
           <iframe
-            src="https://player.vimeo.com/video/1129637842?background=1&autoplay=1&muted=1&loop=1&playsinline=1"
+            src="https://player.vimeo.com/video/1129637842?background=1&autoplay=1&muted=1&loop=1&playsinline=1&autopause=0"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
@@ -186,4 +186,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
