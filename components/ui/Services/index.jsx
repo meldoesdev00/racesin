@@ -5,8 +5,8 @@ import SectionWrapper from "../../SectionWrapper";
 import service1 from "/public/pictures/coaching2.jpg";
 import service2 from "/public/pictures/simulator.jpg";
 import service6 from "/public/pictures/Car2.jpg";
-import carImage from "/public/pictures/rendikas_car.png";
-import kartImage from "/public/pictures/rendikas_kart.png";
+import carImage from "/public/pictures/rent_car.png";
+import kartImage from "/public/pictures/rent_kart.png";
 
 const Services = () => {
   const router = useRouter();
