@@ -36,8 +36,9 @@ export default function Home() {
       gap: '32px',
       overflow: 'hidden',
     }}>
+
+      {/* Countdown */}
       <div style={{
-        fontFamily: '  --font-sans: "Avantt TRIAL Medium";',
         fontWeight: 900,
         fontSize: 'clamp(5rem, 20vw, 16rem)',
         color: '#fff',
@@ -48,23 +49,31 @@ export default function Home() {
         {time}
       </div>
 
-      <div style={{
-        width: 'clamp(200px, 25vw, 340px)',
-        height: 'clamp(200px, 25vw, 340px)',
-        position: 'relative',
-        borderRadius: '6px',
-        overflow: 'hidden',
-      }}>
-        <img
-        src="https://media1.tenor.com/m/vpiWFoSbzuMAAAAd/jet-simulator.gif"
-        alt=""
-        style={{
-          width: 'clamp(200px, 25vw, 340px)',
-          height: 'auto',
-          borderRadius: '6px',
-        }}
-      />
+      {/* Social icons */}
+      <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+        <a href="https://www.instagram.com/racesin_com/" target="_blank" rel="noopener noreferrer"
+          style={{ color: '#fff', opacity: 0.7, transition: 'opacity 0.2s' }}
+          onMouseEnter={e => e.currentTarget.style.opacity = 1}
+          onMouseLeave={e => e.currentTarget.style.opacity = 0.7}
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+
+        <a href="https://www.tiktok.com/@racesin.com" target="_blank" rel="noopener noreferrer"
+          style={{ color: '#fff', opacity: 0.7, transition: 'opacity 0.2s' }}
+          onMouseEnter={e => e.currentTarget.style.opacity = 1}
+          onMouseLeave={e => e.currentTarget.style.opacity = 0.7}
+        >
+          <svg width="26" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+          </svg>
+        </a>
       </div>
+
     </div>
   );
 }
