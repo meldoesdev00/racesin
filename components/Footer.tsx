@@ -18,6 +18,7 @@ const footerLinks = [
       { label: "Post a Listing", href: "/market/create" },
       { label: "My Listings", href: "/market/my-listings" },
       { label: "Messages", href: "/market/messages" },
+      { label: "Marketplace Terms", href: "/market/terms" },
     ],
   },
   {
@@ -37,6 +38,7 @@ const footerLinks = [
       { label: "Privacy Policy", href: "/policies?section=privacy" },
       { label: "Cookies Policy", href: "/policies?section=cookies" },
       { label: "Returns & Refunds", href: "/policies?section=returns" },
+      { label: "Marketplace Disclaimer", href: "/market/terms" },
     ],
   },
 ]

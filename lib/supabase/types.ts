@@ -5,6 +5,7 @@ export type Listing = {
   description: string | null
   category: string
   price: number
+  original_price: number | null
   condition: "new" | "like-new" | "good" | "fair"
   location: string | null
   phone: string | null
@@ -31,6 +32,8 @@ export type Profile = {
   name: string | null
   phone: string | null
   avatar_url: string | null
+  description: string | null
+  location: string | null
   created_at: string
 }
 
@@ -60,16 +63,22 @@ export type Message = {
 }
 
 export const MARKET_CATEGORIES = [
-  { id: "simulators", label: "Simulators & Parts" },
-  { id: "safety", label: "Safety Equipment" },
-  { id: "wheels-tyres", label: "Wheels & Tyres" },
-  { id: "suspension", label: "Suspension & Brakes" },
-  { id: "engine", label: "Engine & Drivetrain" },
-  { id: "electronics", label: "Electronics & Data" },
-  { id: "tools", label: "Tools & Equipment" },
-  { id: "vehicles", label: "Race Cars & Vehicles" },
-  { id: "clothing", label: "Clothing & Accessories" },
-  { id: "other", label: "Other" },
+  { id: "frames", label: "Frames" },
+  { id: "seats", label: "Seats" },
+  { id: "wheel", label: "Wheel" },
+  { id: "pedals", label: "Pedals" },
+  { id: "wheelbase", label: "Wheelbase" },
+  { id: "shifter", label: "Shifter" },
+  { id: "handbrake", label: "Handbrake" },
+  { id: "computers", label: "Computers" },
+  { id: "monitors", label: "Monitors" },
+  { id: "accessories", label: "Accessories" },
+] as const
+
+export const BRANDS = [
+  "Fanatec", "Moza", "Simagic", "Thrustmaster", "Logitech",
+  "Racesin", "Simlab", "Simucube", "Asetek", "Next Level Racing",
+  "Heusinkveld", "Other",
 ] as const
 
 export const CONDITIONS = [

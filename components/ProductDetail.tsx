@@ -3,7 +3,6 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import Footer from "./Footer"
-import { useCart } from "./CartProvider.client"
 
 type Variant = {
   id: string
@@ -171,13 +170,14 @@ function hasRealVariants(variants: Variant[]) {
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
-  const { addItem } = useCart()
   const [activeIndex, setActiveIndex] = useState(0)
-  const [qty, setQty] = useState(1)
-  const [buyNowLoading, setBuyNowLoading] = useState(false)
-  const [buyNowError, setBuyNowError] = useState<string | null>(null)
   const [techSpecsHtml, setTechSpecsHtml] = useState<string | null>(null)
   const [cleanDescriptionHtml, setCleanDescriptionHtml] = useState("")
+  const [inquiryOpen, setInquiryOpen] = useState(false)
+  const [inquiryName, setInquiryName] = useState("")
+  const [inquiryEmail, setInquiryEmail] = useState("")
+  const [inquiryMessage, setInquiryMessage] = useState("")
+  const [inquiryStatus, setInquiryStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
 
   const variants = product.variants || []
   const optionGroups = getOptionGroups(variants)
@@ -206,7 +206,6 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     ? (selectedVariant.quantityAvailable ?? 999)
     : 0
 
-  const inStock = remainingStock > 0
 
   useEffect(() => {
     const sourceHtml = product.descriptionHtml ?? product.description
@@ -358,84 +357,114 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 </div>
               )}
 
-              <div className="mt-7 space-y-4">
-                {/* Quantity selector */}
-                <div className="flex items-center gap-4">
-                  <span className="text-sm font-medium text-neutral-700">Quantity</span>
-                  <div className="flex items-center border rounded-full overflow-hidden">
-                    <button
-                      onClick={() => setQty((q) => Math.max(1, q - 1))}
-                      disabled={!inStock}
-                      className="w-10 h-10 flex items-center justify-center hover:bg-neutral-100 transition disabled:opacity-40"
-                    >
-                      −
-                    </button>
-                    <span className="w-8 text-center text-sm font-medium">{qty}</span>
-                    <button
-                      onClick={() => setQty((q) => Math.min(remainingStock, q + 1))}
-                      disabled={!inStock || qty >= remainingStock}
-                      className="w-10 h-10 flex items-center justify-center hover:bg-neutral-100 transition disabled:opacity-40"
-                    >
-                      +
-                    </button>
+              <div className="mt-7 space-y-3">
+                <button
+                  onClick={() => setInquiryOpen(true)}
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                  Enquire about this product
+                </button>
+                <p className="text-xs text-neutral-400 text-center">We'll get back to you within 24 hours</p>
+              </div>
+
+              {/* Inquiry modal */}
+              {inquiryOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setInquiryOpen(false)} />
+                  <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-3xl flex overflow-hidden">
+
+                    {/* Left — product image, desktop only */}
+                    {images[0] && (
+                      <div className="hidden sm:block relative w-72 flex-shrink-0 bg-neutral-100">
+                        <Image
+                          src={images[0].url}
+                          alt={product.title}
+                          fill
+                          sizes="(min-width: 640px) 288px, 100vw"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+
+                    {/* Right — form */}
+                    <div className="flex-1 p-6 space-y-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <h3 className="font-semibold text-base">Enquire about this product</h3>
+                          <p className="text-xs text-neutral-500 mt-0.5 line-clamp-1">{product.title}</p>
+                        </div>
+                        <button onClick={() => setInquiryOpen(false)} className="text-neutral-400 hover:text-black transition flex-shrink-0 mt-0.5">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                        </button>
+                      </div>
+
+                    {inquiryStatus === "sent" ? (
+                      <div className="py-6 text-center space-y-2">
+                        <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <p className="font-medium text-sm">Message sent!</p>
+                        <p className="text-xs text-neutral-400">We'll be in touch within 24 hours.</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <input
+                          type="text"
+                          value={inquiryName}
+                          onChange={(e) => setInquiryName(e.target.value)}
+                          placeholder="Your name"
+                          className="w-full px-4 py-3 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-black"
+                        />
+                        <input
+                          type="email"
+                          value={inquiryEmail}
+                          onChange={(e) => setInquiryEmail(e.target.value)}
+                          placeholder="Your email"
+                          className="w-full px-4 py-3 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-black"
+                        />
+                        <textarea
+                          value={inquiryMessage}
+                          onChange={(e) => setInquiryMessage(e.target.value)}
+                          placeholder={`Hi, I'm interested in the ${product.title}. Could you tell me more about availability and pricing?`}
+                          rows={4}
+                          className="w-full px-4 py-3 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-black resize-none"
+                        />
+                        {inquiryStatus === "error" && (
+                          <p className="text-red-500 text-xs">Something went wrong. Please try again.</p>
+                        )}
+                        <button
+                          onClick={async () => {
+                            if (!inquiryName.trim() || !inquiryEmail.trim() || !inquiryMessage.trim()) return
+                            setInquiryStatus("sending")
+                            try {
+                              const res = await fetch("/api/contact", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                  name: inquiryName.trim(),
+                                  email: inquiryEmail.trim(),
+                                  message: `Product enquiry: ${product.title}\n\n${inquiryMessage.trim()}`,
+                                }),
+                              })
+                              setInquiryStatus(res.ok ? "sent" : "error")
+                            } catch {
+                              setInquiryStatus("error")
+                            }
+                          }}
+                          disabled={inquiryStatus === "sending" || !inquiryName.trim() || !inquiryEmail.trim() || !inquiryMessage.trim()}
+                          className="w-full py-3 rounded-xl bg-black text-white text-sm font-medium hover:opacity-80 transition disabled:opacity-40"
+                        >
+                          {inquiryStatus === "sending" ? "Sending…" : "Send enquiry"}
+                        </button>
+                      </div>
+                    )}
+                    </div>
                   </div>
                 </div>
-
-                {/* Buttons */}
-                <div className="flex gap-3">
-                  <button
-                    disabled={!inStock}
-                    onClick={() => {
-                      if (!selectedVariant) return
-                      addItem({
-                        variantId: selectedVariant.id,
-                        title: product.title,
-                        price: selectedVariant.price.amount,
-                        image: images[0]?.url,
-                        quantity: qty,
-                        availableQuantity: selectedVariant.quantityAvailable ?? 999,
-                      })
-                    }}
-                    className="flex-1 inline-flex items-center justify-center px-6 py-4 rounded-full border border-black bg-white text-black text-sm font-medium hover:bg-neutral-100 transition disabled:opacity-40"
-                  >
-                    Add to Cart
-                  </button>
-                  <button
-                    disabled={!inStock || buyNowLoading}
-                    onClick={async () => {
-                      if (!selectedVariant) return
-                      setBuyNowLoading(true)
-                      setBuyNowError(null)
-                      try {
-                        const res = await fetch("/api/checkout", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            lineItems: [{ variantId: selectedVariant.id, quantity: qty }],
-                          }),
-                        })
-                        const data = await res.json()
-                        if (data.checkoutUrl) {
-                          window.location.href = data.checkoutUrl
-                        } else {
-                          setBuyNowError(data.error || "This item is currently out of stock.")
-                        }
-                      } catch {
-                        setBuyNowError("Something went wrong. Please try again.")
-                      } finally {
-                        setBuyNowLoading(false)
-                      }
-                    }}
-                    className="flex-1 inline-flex items-center justify-center px-6 py-4 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition disabled:opacity-40"
-                  >
-                    {buyNowLoading ? "Loading..." : "Buy Now"}
-                  </button>
-                </div>
-
-                {buyNowError && (
-                  <p className="text-red-500 text-sm mt-1">{buyNowError}</p>
-                )}
-              </div>
+              )}
 
               <div
                 className="product-description mt-7 text-base text-neutral-700 text-lg leading-relaxed"

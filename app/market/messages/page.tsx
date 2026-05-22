@@ -2,7 +2,6 @@ import { redirect } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
 import { timeAgo } from "@/lib/supabase/types"
-import type { Conversation } from "@/lib/supabase/types"
 
 export const dynamic = "force-dynamic"
 
@@ -13,16 +12,20 @@ export default async function MessagesPage() {
 
   const { data: conversations } = await supabase
     .from("conversations")
-    .select(`
-      *,
-      seller:seller_id(id, name),
-      buyer:buyer_id(id, name),
-      messages(id, content, sender_id, read, created_at)
-    `)
+    .select("*, messages(id, content, sender_id, read, created_at)")
     .or(`seller_id.eq.${user.id},buyer_id.eq.${user.id}`)
     .order("last_message_at", { ascending: false })
 
-  const convs = (conversations ?? []) as Conversation[]
+  const convs = conversations ?? []
+
+  // Collect all unique user IDs we need profiles for
+  const userIds = [...new Set(convs.flatMap((c) => [c.seller_id, c.buyer_id]))]
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, name")
+    .in("id", userIds.length ? userIds : ["none"])
+
+  const profileMap = Object.fromEntries((profiles ?? []).map((p) => [p.id, p]))
 
   return (
     <main className="mx-auto max-w-[1600px] px-4 sm:px-6 py-10">
@@ -44,11 +47,13 @@ export default async function MessagesPage() {
       ) : (
         <div className="max-w-2xl space-y-2">
           {convs.map((conv) => {
-            const lastMsg = conv.messages?.sort((a, b) =>
+            const msgs = (conv.messages ?? []) as { id: string; content: string; sender_id: string; read: boolean; created_at: string }[]
+            const lastMsg = [...msgs].sort((a, b) =>
               new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
             )[0]
-            const otherPerson = conv.seller_id === user.id ? conv.buyer : conv.seller
-            const unread = conv.messages?.filter((m) => !m.read && m.sender_id !== user.id).length ?? 0
+            const otherPersonId = conv.seller_id === user.id ? conv.buyer_id : conv.seller_id
+            const otherPerson = profileMap[otherPersonId]
+            const unread = msgs.filter((m) => !m.read && m.sender_id !== user.id).length
 
             return (
               <Link
@@ -56,15 +61,14 @@ export default async function MessagesPage() {
                 href={`/market/messages/${conv.id}`}
                 className="flex items-center gap-4 bg-white border border-neutral-200 rounded-2xl p-4 hover:border-neutral-400 transition"
               >
-                {/* Avatar */}
                 <div className="w-11 h-11 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-semibold text-sm flex-shrink-0">
-                  {(otherPerson as { name?: string } | null)?.name?.[0]?.toUpperCase() ?? "?"}
+                  {otherPerson?.name?.[0]?.toUpperCase() ?? "?"}
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-0.5">
                     <p className={`text-sm ${unread > 0 ? "font-bold text-black" : "font-semibold text-neutral-900"}`}>
-                      {(otherPerson as { name?: string } | null)?.name ?? "Unknown"}
+                      {otherPerson?.name ?? "Unknown"}
                     </p>
                     {lastMsg && (
                       <span className="text-xs text-neutral-400 flex-shrink-0 ml-2">{timeAgo(lastMsg.created_at)}</span>

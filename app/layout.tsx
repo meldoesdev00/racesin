@@ -27,8 +27,8 @@ export default function RootLayout({
       <body className="antialiased">
         <CartProvider>
           <Navbar />
-          {children}
           <CartDrawer />
+          {children}
         </CartProvider>
 
         {/* Cookie Consent Banner (loads GA only after accept) */}

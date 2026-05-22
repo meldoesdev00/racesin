@@ -1,4 +1,3 @@
-import MarketNav from "@/components/market/MarketNav.client"
 import Footer from "@/components/Footer"
 
 export const metadata = {
@@ -9,7 +8,6 @@ export const metadata = {
 export default function MarketLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <MarketNav />
       <div className="min-h-screen bg-neutral-50">
         {children}
       </div>

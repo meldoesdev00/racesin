@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { createClient } from "@/lib/supabase/client"
 import type { Listing, Profile } from "@/lib/supabase/types"
 
@@ -49,11 +50,32 @@ export default function ContactSeller({ listing, seller }: Props) {
       if (convErr || !conv) throw new Error("Could not start conversation")
 
       // Send message
-      await supabase.from("messages").insert({
+      const { data: msgData } = await supabase.from("messages").insert({
         conversation_id: conv.id,
         sender_id: user.id,
         content: msgText.trim(),
-      })
+      }).select().single()
+
+      // Email notification to seller (fire and forget)
+      if (listing.email && msgData) {
+        const { data: buyerProfile } = await supabase
+          .from("profiles")
+          .select("name")
+          .eq("id", user.id)
+          .single()
+        fetch("/api/market/notify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sellerEmail: listing.email,
+            sellerName: seller?.name ?? "",
+            buyerName: buyerProfile?.name ?? user.email ?? "",
+            listingTitle: listing.title,
+            message: msgText.trim(),
+            listingUrl: `${window.location.origin}/market/messages/${conv.id}`,
+          }),
+        })
+      }
 
       setMessageSent(true)
       setMsgText("")
@@ -67,22 +89,21 @@ export default function ContactSeller({ listing, seller }: Props) {
   return (
     <div className="bg-white border border-neutral-200 rounded-2xl p-6 space-y-4 sticky top-20">
       {/* Seller info */}
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-semibold text-sm">
-          {seller?.name?.[0]?.toUpperCase() ?? "?"}
+      <Link href={`/market/seller/${listing.user_id}`} className="flex items-center gap-3 hover:opacity-80 transition">
+        <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-semibold text-sm flex-shrink-0 overflow-hidden">
+          {seller?.avatar_url ? (
+            <Image src={seller.avatar_url} alt={seller.name ?? ""} width={40} height={40} className="w-full h-full object-cover" />
+          ) : (
+            seller?.name?.[0]?.toUpperCase() ?? "?"
+          )}
         </div>
         <div>
           <p className="font-semibold text-sm text-neutral-900">{seller?.name ?? "Seller"}</p>
-          <p className="text-xs text-neutral-400">Private seller</p>
+          <p className="text-xs text-neutral-400">View profile →</p>
         </div>
-      </div>
+      </Link>
 
       <hr className="border-neutral-100" />
-
-      {/* Price */}
-      <div>
-        <p className="text-3xl font-bold text-black">€{Math.round(listing.price).toLocaleString("de-DE")}</p>
-      </div>
 
       {/* Phone */}
       {listing.phone && (

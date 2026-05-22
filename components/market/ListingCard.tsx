@@ -5,9 +5,13 @@ import type { Listing } from "@/lib/supabase/types"
 
 export default function ListingCard({ listing }: { listing: Listing }) {
   const firstImage = listing.listing_images?.[0]?.url
-  const price = typeof listing.price === "number"
-    ? Math.round(listing.price).toLocaleString("de-DE")
-    : listing.price
+  const price = Math.round(listing.price).toLocaleString("de-DE")
+  const originalPrice = listing.original_price && listing.original_price > listing.price
+    ? Math.round(listing.original_price).toLocaleString("de-DE")
+    : null
+  const discountPct = listing.original_price && listing.original_price > listing.price
+    ? Math.round((1 - listing.price / listing.original_price) * 100)
+    : null
 
   return (
     <Link
@@ -46,9 +50,15 @@ export default function ListingCard({ listing }: { listing: Listing }) {
           {listing.title}
         </h3>
 
-        <p className="text-xl font-bold text-black">
-          €{price}
-        </p>
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <p className="text-xl font-bold text-black">€{price}</p>
+          {originalPrice && (
+            <>
+              <p className="text-sm text-neutral-400 line-through">€{originalPrice}</p>
+              <span className="text-xs font-semibold text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">-{discountPct}%</span>
+            </>
+          )}
+        </div>
 
         <div className="flex flex-wrap items-center gap-1.5">
           <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${conditionStyle(listing.condition)}`}>

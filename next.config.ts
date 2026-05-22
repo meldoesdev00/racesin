@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "**.myshopify.com",
       },
+      {
+        protocol: "https",
+        hostname: "pzezpldjmkkbpmlsvjbt.supabase.co",
+      },
     ],
   },
 }

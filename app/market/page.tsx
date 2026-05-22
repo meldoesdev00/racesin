@@ -84,10 +84,10 @@ export default async function MarketPage({
       {/* Hero */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-semibold text-neutral-900 mb-2">
-          Motorsport Marketplace
+          Sim-racing Marketplace
         </h1>
         <p className="text-neutral-500 text-base">
-          {activeCount.toLocaleString()} active listings — buy and sell motorsport equipment
+          {activeCount.toLocaleString()} active listings — buy and sell sim-racing equipment
         </p>
       </div>
 
