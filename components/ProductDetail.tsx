@@ -2,8 +2,8 @@
 
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import ContactDrawer from "./ContactDrawer"
 import Footer from "./Footer"
+import { useCart } from "./CartProvider.client"
 
 type Variant = {
   id: string
@@ -171,9 +171,10 @@ function hasRealVariants(variants: Variant[]) {
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
-  const qty = 1
+  const { addItem } = useCart()
   const [activeIndex, setActiveIndex] = useState(0)
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [qty, setQty] = useState(1)
+  const [buyNowLoading, setBuyNowLoading] = useState(false)
   const [techSpecsHtml, setTechSpecsHtml] = useState<string | null>(null)
   const [cleanDescriptionHtml, setCleanDescriptionHtml] = useState("")
 
@@ -235,7 +236,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             <section className="flex flex-col lg:flex-row gap-4 lg:gap-6 min-w-0">
 
               {/* THUMBNAILS */}
-              <div className="order-2 lg:order-1 flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
+              <div className={`order-2 lg:order-1 flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 ${images.length <= 1 ? "hidden lg:flex" : ""}`}>
                 {images.map((img, i) => (
                   <button
                     key={i}
@@ -356,6 +357,74 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 </div>
               )}
 
+              <div className="mt-7 space-y-4">
+                {/* Quantity selector */}
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-medium text-neutral-700">Quantity</span>
+                  <div className="flex items-center border rounded-full overflow-hidden">
+                    <button
+                      onClick={() => setQty((q) => Math.max(1, q - 1))}
+                      disabled={!inStock}
+                      className="w-10 h-10 flex items-center justify-center hover:bg-neutral-100 transition disabled:opacity-40"
+                    >
+                      −
+                    </button>
+                    <span className="w-8 text-center text-sm font-medium">{qty}</span>
+                    <button
+                      onClick={() => setQty((q) => Math.min(remainingStock, q + 1))}
+                      disabled={!inStock || qty >= remainingStock}
+                      className="w-10 h-10 flex items-center justify-center hover:bg-neutral-100 transition disabled:opacity-40"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-3">
+                  <button
+                    disabled={!inStock}
+                    onClick={() => {
+                      if (!selectedVariant) return
+                      addItem({
+                        variantId: selectedVariant.id,
+                        title: product.title,
+                        price: selectedVariant.price.amount,
+                        image: images[0]?.url,
+                        quantity: qty,
+                        availableQuantity: selectedVariant.quantityAvailable ?? 999,
+                      })
+                    }}
+                    className="flex-1 inline-flex items-center justify-center px-6 py-4 rounded-full border border-black bg-white text-black text-sm font-medium hover:bg-neutral-100 transition disabled:opacity-40"
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    disabled={!inStock || buyNowLoading}
+                    onClick={async () => {
+                      if (!selectedVariant) return
+                      setBuyNowLoading(true)
+                      try {
+                        const res = await fetch("/api/checkout", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            lineItems: [{ variantId: selectedVariant.id, quantity: qty }],
+                          }),
+                        })
+                        const data = await res.json()
+                        if (data.checkoutUrl) window.location.href = data.checkoutUrl
+                      } finally {
+                        setBuyNowLoading(false)
+                      }
+                    }}
+                    className="flex-1 inline-flex items-center justify-center px-6 py-4 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition disabled:opacity-40"
+                  >
+                    {buyNowLoading ? "Loading..." : "Buy Now"}
+                  </button>
+                </div>
+              </div>
+
               <div
                 className="product-description mt-7 text-base text-neutral-700 text-lg leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: processDescription(cleanDescriptionHtml) }}
@@ -385,28 +454,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                   <div dangerouslySetInnerHTML={{ __html: specifications }} />
                 </div>
               )}
-
-              <div className="mt-12">
-                <button
-                  disabled={!inStock}
-                  onClick={() => setDrawerOpen(true)}
-                  className="inline-flex items-center justify-center px-7 py-4 rounded-full bg-black text-white text-sm hover:opacity-90 transition disabled:opacity-40"
-                >
-                  Contact Us
-                </button>
-              </div>
             </section>
           </div>
         </div>
       </main>
-
-      <ContactDrawer
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        product={product.title}
-        price={`€${price}`}
-        quantity={qty}
-      />
 
       <Footer />
     </>

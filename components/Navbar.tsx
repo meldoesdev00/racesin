@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import RentalsOverlay from "@/components/RentalsOverlay.client"
+import { useCart } from "@/components/CartProvider.client"
 
 const navItems = [
   { label: "About Us", href: "/about-us" },
@@ -17,6 +18,8 @@ const navItems = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [rentalsOpen, setRentalsOpen] = useState(false)
+  const { items, setOpen: setCartOpen } = useCart()
+  const itemCount = items.reduce((sum, i) => sum + i.quantity, 0)
 
   return (
     <>
@@ -87,6 +90,24 @@ export default function Navbar() {
           </Link>
 
 
+          {/* CART ICON (MOBILE) */}
+          <button
+            onClick={() => setCartOpen(true)}
+            className="lg:hidden ml-auto p-2 relative"
+            aria-label="Open cart"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            {itemCount > 0 && (
+              <span className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-medium">
+                {itemCount}
+              </span>
+            )}
+          </button>
+
           {/* RIGHT SIDE (DESKTOP ONLY) */}
           <div className="ml-auto hidden lg:flex items-center gap-5">
 
@@ -134,6 +155,24 @@ export default function Navbar() {
                 <path d="M448 209.9a210.1 210.1 0 0 1-122.8-39.4v178.1a162.6 162.6 0 1 1-141.1-161.6v89.3a73.2 73.2 0 1 0 51.8 69.8V0h90.6a119.2 119.2 0 0 0 121.5 119.2v90.7Z" />
               </svg>
             </Link>
+
+            {/* Cart */}
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative hover:opacity-60 transition"
+              aria-label="Open cart"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              {itemCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-medium">
+                  {itemCount}
+                </span>
+              )}
+            </button>
 
           </div>
         </div>
