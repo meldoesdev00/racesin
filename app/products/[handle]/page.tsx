@@ -2,6 +2,8 @@ import { notFound } from "next/navigation"
 import { shopifyFetch } from "@/lib/shopify"
 import ProductDetail from "../../../components/ProductDetail"
 
+export const dynamic = "force-dynamic"
+
 const PRODUCT_QUERY = `
   query ProductByHandle($handle: String!) {
     productByHandle(handle: $handle) {

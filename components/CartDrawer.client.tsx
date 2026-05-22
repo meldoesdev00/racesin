@@ -7,11 +7,13 @@ import { useCart } from "./CartProvider.client"
 export default function CartDrawer() {
   const { items, open, setOpen, removeItem, updateQuantity } = useCart()
   const [loading, setLoading] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
 
   const total = items.reduce((sum, item) => sum + parseFloat(item.price) * item.quantity, 0)
 
   async function handleCheckout() {
     setLoading(true)
+    setCheckoutError(null)
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -26,9 +28,11 @@ export default function CartDrawer() {
       const data = await res.json()
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl
+      } else {
+        setCheckoutError(data.error || "One or more items are out of stock.")
       }
-    } catch (err) {
-      console.error("Checkout error", err)
+    } catch {
+      setCheckoutError("Something went wrong. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -101,11 +105,14 @@ export default function CartDrawer() {
 
           {/* Footer */}
           {items.length > 0 && (
-            <div className="px-6 pt-4 pb-8 border-t space-y-4">
+            <div className="px-6 pt-4 pb-8 border-t space-y-3">
               <div className="flex justify-between font-semibold text-base">
                 <span>Total</span>
                 <span>€{Math.round(total)}</span>
               </div>
+              {checkoutError && (
+                <p className="text-red-500 text-sm">{checkoutError}</p>
+              )}
               <button
                 onClick={handleCheckout}
                 disabled={loading}
@@ -169,11 +176,14 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="px-6 py-5 border-t space-y-4">
+          <div className="px-6 py-5 border-t space-y-3">
             <div className="flex justify-between font-semibold text-lg">
               <span>Total</span>
               <span>€{Math.round(total)}</span>
             </div>
+            {checkoutError && (
+              <p className="text-red-500 text-sm">{checkoutError}</p>
+            )}
             <button
               onClick={handleCheckout}
               disabled={loading}

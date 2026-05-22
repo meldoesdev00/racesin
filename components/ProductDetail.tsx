@@ -175,6 +175,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [qty, setQty] = useState(1)
   const [buyNowLoading, setBuyNowLoading] = useState(false)
+  const [buyNowError, setBuyNowError] = useState<string | null>(null)
   const [techSpecsHtml, setTechSpecsHtml] = useState<string | null>(null)
   const [cleanDescriptionHtml, setCleanDescriptionHtml] = useState("")
 
@@ -404,6 +405,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                     onClick={async () => {
                       if (!selectedVariant) return
                       setBuyNowLoading(true)
+                      setBuyNowError(null)
                       try {
                         const res = await fetch("/api/checkout", {
                           method: "POST",
@@ -413,7 +415,13 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                           }),
                         })
                         const data = await res.json()
-                        if (data.checkoutUrl) window.location.href = data.checkoutUrl
+                        if (data.checkoutUrl) {
+                          window.location.href = data.checkoutUrl
+                        } else {
+                          setBuyNowError(data.error || "This item is currently out of stock.")
+                        }
+                      } catch {
+                        setBuyNowError("Something went wrong. Please try again.")
                       } finally {
                         setBuyNowLoading(false)
                       }
@@ -423,6 +431,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                     {buyNowLoading ? "Loading..." : "Buy Now"}
                   </button>
                 </div>
+
+                {buyNowError && (
+                  <p className="text-red-500 text-sm mt-1">{buyNowError}</p>
+                )}
               </div>
 
               <div
