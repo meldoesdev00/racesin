@@ -12,6 +12,15 @@ const footerLinks = [
     ],
   },
   {
+    title: "Market",
+    links: [
+      { label: "Browse Listings", href: "/market" },
+      { label: "Post a Listing", href: "/market/create" },
+      { label: "My Listings", href: "/market/my-listings" },
+      { label: "Messages", href: "/market/messages" },
+    ],
+  },
+  {
     title: "Customer Care",
     links: [
       { label: "FAQ", href: "/faq" },

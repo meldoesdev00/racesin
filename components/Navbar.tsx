@@ -11,6 +11,7 @@ const navItems = [
   { label: "Our Products", href: "/products" },
   { label: "Pre-Built Set", href: "/pre-built-set" },
   { label: "Rentals", href: "overlay" },
+  { label: "Market", href: "/market" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact Us", href: "/contact" },
 ]
