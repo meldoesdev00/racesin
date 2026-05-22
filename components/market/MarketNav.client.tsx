@@ -9,13 +9,18 @@ import type { User } from "@supabase/supabase-js"
 export default function MarketNav() {
   const pathname = usePathname()
   const [user, setUser] = useState<User | null>(null)
+  const [authLoading, setAuthLoading] = useState(true)
   const [unread, setUnread] = useState(0)
   const supabase = createClient()
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUser(data.user))
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user)
+      setAuthLoading(false)
+    })
     const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user ?? null)
+      setAuthLoading(false)
     })
     return () => listener.subscription.unsubscribe()
   }, [])
@@ -58,7 +63,9 @@ export default function MarketNav() {
         </div>
 
         <div className="flex items-center gap-3 flex-shrink-0">
-          {user ? (
+          {authLoading ? (
+            <div className="w-20 h-6 rounded-full bg-neutral-100 animate-pulse" />
+          ) : user ? (
             <>
               <Link
                 href="/market/create"
@@ -70,7 +77,7 @@ export default function MarketNav() {
                 Post a Listing
               </Link>
               <button
-                onClick={async () => { await supabase.auth.signOut(); window.location.reload() }}
+                onClick={async () => { await supabase.auth.signOut(); window.location.href = "/market" }}
                 className="text-sm text-neutral-400 hover:text-black transition"
               >
                 Sign out
@@ -79,7 +86,7 @@ export default function MarketNav() {
           ) : (
             <Link
               href={`/market/auth?next=${encodeURIComponent(pathname)}`}
-              className="text-sm text-neutral-500 hover:text-black transition"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-black text-white text-sm font-medium hover:opacity-80 transition"
             >
               Sign in
             </Link>

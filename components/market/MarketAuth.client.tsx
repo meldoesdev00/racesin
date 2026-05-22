@@ -30,12 +30,17 @@ export default function MarketAuth({ next }: { next: string }) {
           options: { data: { name } },
         })
         if (error) throw error
-        setSuccess("Check your email to confirm your account, then sign in.")
+        // Auto sign-in after signup (works if email confirmation is disabled)
+        const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password })
+        if (!signInErr) {
+          window.location.href = next || "/market"
+          return
+        }
+        setSuccess("Account created! Check your email to confirm, then sign in.")
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        router.push(next || "/market")
-        router.refresh()
+        window.location.href = next || "/market"
       }
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Something went wrong")
