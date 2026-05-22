@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar"
 import { CartProvider } from "@/components/CartProvider.client"
 import CartDrawer from "@/components/CartDrawer.client"
 import CookieConsent from "@/components/CookieConsent.client"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Racesin Motorsport",
@@ -33,6 +35,8 @@ export default function RootLayout({
 
         {/* Cookie Consent Banner (loads GA only after accept) */}
         <CookieConsent />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
