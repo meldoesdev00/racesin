@@ -42,9 +42,6 @@ export default function MarketNav() {
     <div className="border-b border-neutral-200 bg-white sticky top-0 z-30">
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 h-12 flex items-center justify-between gap-6">
         <div className="flex items-center gap-6 overflow-x-auto scrollbar-hide whitespace-nowrap">
-          <Link href="/market" className={`text-sm transition ${active("/market")}`}>
-            All Listings
-          </Link>
           {user && (
             <>
               <Link href="/market/my-listings" className={`text-sm transition ${active("/market/my-listings")}`}>

@@ -1,10 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import RentalsOverlay from "@/components/RentalsOverlay.client"
 import { useCart } from "@/components/CartProvider.client"
+import { createClient } from "@/lib/supabase/client"
+import type { User } from "@supabase/supabase-js"
 
 const navItems = [
   { label: "About Us", href: "/about-us" },
@@ -21,6 +24,17 @@ export default function Navbar() {
   const [rentalsOpen, setRentalsOpen] = useState(false)
   const { items, setOpen: setCartOpen } = useCart()
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0)
+  const pathname = usePathname()
+  const isMarket = pathname.startsWith("/market")
+  const [marketUser, setMarketUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    if (!isMarket) return
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => setMarketUser(data.user))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => setMarketUser(s?.user ?? null))
+    return () => subscription.unsubscribe()
+  }, [isMarket])
 
   return (
     <>
@@ -112,50 +126,53 @@ export default function Navbar() {
           {/* RIGHT SIDE (DESKTOP ONLY) */}
           <div className="ml-auto hidden lg:flex items-center gap-5">
 
-            {/* Instagram */}
-            <Link
-              href="https://www.instagram.com/racesin_com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="hover:opacity-60 transition"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <rect x="2" y="2" width="20" height="20" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
-              </svg>
-            </Link>
+            {isMarket ? (
+              marketUser ? (
+                <button
+                  onClick={async () => { await createClient().auth.signOut(); window.location.href = "/market" }}
+                  className="text-sm font-medium hover:opacity-60 transition"
+                >
+                  Sign out
+                </button>
+              ) : (
+                <Link
+                  href={`/market/auth?next=${encodeURIComponent(pathname)}`}
+                  className="text-sm font-medium hover:opacity-60 transition"
+                >
+                  Sign in
+                </Link>
+              )
+            ) : (
+              <>
+                {/* Instagram */}
+                <Link
+                  href="https://www.instagram.com/racesin_com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="hover:opacity-60 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
+                  </svg>
+                </Link>
 
-            {/* TikTok */}
-            <Link
-              href="https://www.tiktok.com/@racesin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="TikTok"
-              className="hover:opacity-60 transition"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 448 512"
-                fill="currentColor"
-                className="translate-y-[1px]"
-              >
-                <path d="M448 209.9a210.1 210.1 0 0 1-122.8-39.4v178.1a162.6 162.6 0 1 1-141.1-161.6v89.3a73.2 73.2 0 1 0 51.8 69.8V0h90.6a119.2 119.2 0 0 0 121.5 119.2v90.7Z" />
-              </svg>
-            </Link>
+                {/* TikTok */}
+                <Link
+                  href="https://www.tiktok.com/@racesin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok"
+                  className="hover:opacity-60 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 448 512" fill="currentColor" className="translate-y-[1px]">
+                    <path d="M448 209.9a210.1 210.1 0 0 1-122.8-39.4v178.1a162.6 162.6 0 1 1-141.1-161.6v89.3a73.2 73.2 0 1 0 51.8 69.8V0h90.6a119.2 119.2 0 0 0 121.5 119.2v90.7Z" />
+                  </svg>
+                </Link>
+              </>
+            )}
 
             {/* Cart */}
             <button
